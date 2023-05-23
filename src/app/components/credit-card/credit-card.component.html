@@ -1,0 +1,118 @@
+<div class="container mt-5">
+
+  <!-- First row to display the title -->
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="title">Credit Card</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second row to display the content related to credit cards -->
+  <div class="row mt-4">
+
+    <!-- First column to display the Add Credit Cards form -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="title">Add Credit Card</h5>
+
+          <!-- Form to enter the credit card information.
+            [formGroup] allows binding the form to the credit-card.component.ts
+            [formGroup] is related to the variable declared in credit-card.component.ts
+            (ngSubmit) allows binding a function to perform a specific task whenever the user clicks a submit button -->
+          <form [formGroup]="creditCardForm" (ngSubmit)="addCreditCard()">
+            <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                <!-- Using the [class.green-icon] to set the color according to the form correctness
+                    'valid' property allows determining if the information entered by the user fulfill the specified parameters
+                    'touched' property allows determining if the form controls were touched by the user -->
+                <i class="fas fa-user" [class.green-icon]="this.creditCardForm.get('user')?.valid"
+                                        [class.red-icon]="this.creditCardForm.get('user')?.invalid && this.creditCardForm.get('user')?.touched"></i>
+              </span>
+              <!-- formControlName allows binding each form property to the credit-card.component.ts variables -->
+              <input formControlName="user" type="text" class="form-control" placeholder="User name">
+            </div>
+
+            <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                <i class="fas fa-credit-card" [class.green-icon]="this.creditCardForm.get('cardNumber')?.valid"
+                                              [class.red-icon]="this.creditCardForm.get('cardNumber')?.invalid && this.creditCardForm.get('cardNumber')?.touched"></i>
+              </span>
+              <!-- 'maxLength' allows the form to control the number of digits accepted -->
+              <input formControlName="cardNumber" type="text" class="form-control" placeholder="Credit card number" maxlength="16">
+            </div>
+
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-calendar-alt" [class.green-icon]="this.creditCardForm.get('endDate')?.valid"
+                                                    [class.red-icon]="this.creditCardForm.get('endDate')?.invalid && this.creditCardForm.get('endDate')?.touched"></i>
+                  </span>
+                  <input formControlName="endDate" type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                </div>
+              </div>
+
+              <div class="col-lg-5">
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-key" [class.green-icon]="this.creditCardForm.get('cvv')?.valid"
+                                          [class.red-icon]="this.creditCardForm.get('cvv')?.invalid && this.creditCardForm.get('cvv')?.touched"></i>
+                  </span>
+                  <input formControlName="cvv" type="password" class="form-control" placeholder="CVV" maxlength="3">
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <!-- [disabled] allows disabling the button if the form is invalid -->
+              <button class="btn btn-success btn-lg" type="submit" [disabled]="this.creditCardForm.invalid">
+                <i class="fas fa-database"></i>
+                &nbsp;Accept
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second column to display the list of credit cards -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+
+          <h5 class="title">List of Credit Cards</h5>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Card Number</th>
+                <th>End Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let creditCard of creditCardList; let i = index">
+                <td>{{creditCard.user}}</td>
+                <td>{{creditCard.cardNumber}}</td>
+                <td>{{creditCard.endDate}}</td>
+                <!-- (click) event allows binding the editCreditCard() function every time the user clicks the 'edit' icon -->
+                <td><i (click)="editCreditCard()" class="far fa-edit text-info"></i></td>
+                <!-- (click) event allows binding the deleteCreditCard(i) function every time the user clicks 'delete' the icon -->
+                <td><i (click)="deleteCreditCard(i)" class="far fa-trash-alt text-danger"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
