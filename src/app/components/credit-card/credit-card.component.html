@@ -18,13 +18,14 @@
     <div class="col-lg-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="title">Add Credit Card</h5>
+          <!-- Displays the name of the operation selected -->
+          <h5 class="title">{{selectedOption | uppercase}}</h5>
 
           <!-- Form to enter the credit card information.
             [formGroup] allows binding the form to the credit-card.component.ts
             [formGroup] is related to the variable declared in credit-card.component.ts
             (ngSubmit) allows binding a function to perform a specific task whenever the user clicks a submit button -->
-          <form [formGroup]="creditCardForm" (ngSubmit)="addCreditCard()">
+          <form [formGroup]="creditCardForm" (ngSubmit)="saveCreditCard()">
             <div class="input-group input-group-lg mb-3">
               <span class="input-group-text" id="basic-addon1">
                 <!-- Using the [class.green-icon] to set the color according to the form correctness
@@ -98,14 +99,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let creditCard of creditCardList; let i = index">
+              <tr *ngFor="let creditCard of creditCardList">
                 <td>{{creditCard.user}}</td>
                 <td>{{creditCard.cardNumber}}</td>
                 <td>{{creditCard.endDate}}</td>
                 <!-- (click) event allows binding the editCreditCard() function every time the user clicks the 'edit' icon -->
-                <td><i (click)="editCreditCard()" class="far fa-edit text-info"></i></td>
+                <td><i (click)="editCreditCard(creditCard)" class="far fa-edit text-info"></i></td>
                 <!-- (click) event allows binding the deleteCreditCard(i) function every time the user clicks 'delete' the icon -->
-                <td><i (click)="deleteCreditCard(i)" class="far fa-trash-alt text-danger"></i></td>
+                <td><i (click)="deleteCreditCard(creditCard.id)" class="far fa-trash-alt text-danger"></i></td>
               </tr>
             </tbody>
           </table>
